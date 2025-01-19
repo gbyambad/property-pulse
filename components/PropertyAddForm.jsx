@@ -34,9 +34,67 @@ const ProperyAddForm = () => {
     setMounted(true);
   }, []);
 
-  const handleChange = () => {};
-  const handleAmenitiesChange = () => {};
-  const handleImageChange = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".");
+
+      setFields((prevFields) => ({
+        ...prevFields,
+        [outerKey]: {
+          ...prevFields[outerKey],
+          [innerKey]: value,
+        },
+      }));
+    } else {
+      setFields((prevFields) => ({
+        ...prevFields,
+        [name]: value,
+      }));
+    }
+  };
+  const handleAmenitiesChange = (e) => {
+    const { value, checked } = e.target;
+
+    // Clone the current array
+    const updateAmenities = [...fields.amenities];
+
+    if (checked) {
+      // Add value to  array
+      updateAmenities.push(value);
+    } else {
+      // Remove value from array
+      const index = updateAmenities.indexOf(value);
+
+      if (index !== -1) {
+        updateAmenities.splice(index, 1);
+      }
+    }
+
+    // Update state with updated array
+    setFields((prevFields) => ({
+      ...prevFields,
+      amenities: updateAmenities,
+    }));
+  };
+  const handleImageChange = (e) => {
+    const { files } = e.target;
+
+    // Clone images array
+    const updateImages = [...fields.images];
+
+    // Add new files to the array
+    for (const file of files) {
+      updateImages.push(file);
+    }
+
+    // Update state with array of images
+    setFields((prevFields) => ({
+      ...prevFields,
+      images: updateImages,
+    }));
+  };
 
   return (
     mounted && (
