@@ -8,7 +8,7 @@ const ProperyAddForm = () => {
     name: "Test Property",
     description: "",
     location: {
-      street: "500 Lux Lane",
+      street: "",
       city: "Los Angeles",
       state: "CA",
       zipcode: "90001",
@@ -16,7 +16,7 @@ const ProperyAddForm = () => {
     beds: 3,
     baths: 2,
     square_feet: 2200,
-    amenities: ["Free Parking"],
+    amenities: [],
     rates: {
       nightly: "",
       weekly: 750,
@@ -98,7 +98,11 @@ const ProperyAddForm = () => {
 
   return (
     mounted && (
-      <form>
+      <form
+        action="/api/properties"
+        method="POST"
+        encType="multipart/form-data"
+      >
         <h2 className="text-3xl text-center font-semibold mb-6">
           Add Property
         </h2>
@@ -558,6 +562,7 @@ const ProperyAddForm = () => {
             accept="image/*"
             multiple
             onChange={handleImageChange}
+            required
           />
         </div>
 
